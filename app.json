@@ -1,0 +1,41 @@
+{
+  "expo": {
+    "name": "controle_de_jogos",
+    "slug": "controle_de_jogos",
+    "version": "1.0.0",
+    "scheme": "portaloperador",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "edgeToEdgeEnabled": true,
+      "package": "com.senai.portaloperador"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "ec7a2caf-987b-4ce6-b672-f43cadd3bc5b"
+      }
+    },
+    "owner": "ryansenai"
+  }
+}

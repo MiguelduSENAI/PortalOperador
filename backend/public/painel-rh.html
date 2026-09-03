@@ -1,0 +1,671 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Painel Administrativo - Portal Gamer</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+        }
+
+        h1 {
+            color: #003366;
+            border-bottom: 2px solid #003366;
+            padding-bottom: 12px;
+            margin-top: 0;
+        }
+
+        h2 {
+            color: #003366;
+            margin-top: 35px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 8px;
+        }
+
+        p {
+            color: #555;
+            line-height: 1.5;
+        }
+
+        /* =========================
+           TABELA DE CHAMADOS
+        ========================= */
+
+        .tabela-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #003366;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8f8f8;
+        }
+
+        /* =========================
+           BOTÃO RESETAR
+        ========================= */
+
+        .btn-reset {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 9px 13px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-reset:hover {
+            background-color: #218838;
+        }
+
+        /* =========================
+           MENSAGEM VAZIA
+        ========================= */
+
+        .empty-msg {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+            color: #666;
+            text-align: center;
+        }
+
+        /* =========================
+           FORMULÁRIO NOTIFICAÇÃO
+        ========================= */
+
+        .card-form {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            margin-top: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 7px;
+            color: #333;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #003366;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        .btn-notificar {
+            background-color: #003366;
+            color: white;
+            border: none;
+            padding: 13px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            width: 100%;
+        }
+
+        .btn-notificar:hover {
+            background-color: #002244;
+        }
+
+        /* =========================
+           RODAPÉ
+        ========================= */
+
+        .footer {
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+            text-align: center;
+            color: #888;
+            font-size: 13px;
+        }
+
+        /* =========================
+           CELULAR
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 18px;
+            }
+
+            h1 {
+                font-size: 23px;
+            }
+
+            h2 {
+                font-size: 19px;
+            }
+
+            table {
+                font-size: 13px;
+            }
+
+            th,
+            td {
+                padding: 9px;
+            }
+
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="container">
+
+        <!-- =========================
+             CABEÇALHO
+        ========================== -->
+
+        <h1>
+             Painel Administrativo - Portal Gamer
+        </h1>
+
+        <p>
+            Gerencie solicitações de senha e envie notificações
+            diretamente para os jogadores do aplicativo.
+        </p>
+
+
+        <!-- =========================
+             CHAMADOS DE SENHA
+        ========================== -->
+
+        <h2>
+             Solicitações de Redefinição de Senha
+        </h2>
+
+        <p>
+            Abaixo estão os jogadores que solicitaram
+            redefinição de senha pelo aplicativo.
+        </p>
+
+
+        <div class="tabela-container">
+
+            <table id="tabela-solicitacoes">
+
+                <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>E-mail do Jogador</th>
+
+                        <th>Data do Pedido</th>
+
+                        <th>Ação</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="corpo-tabela">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <div id="mensagem-vazia" class="empty-msg" style="display: none;">
+            ✅ Nenhuma solicitação de senha pendente.
+        </div>
+
+
+        <!-- =========================
+             NOTIFICAÇÕES
+        ========================== -->
+
+        <h2>
+             Enviar Notificação ao Jogador
+        </h2>
+
+        <p>
+            Envie um comunicado que será exibido como
+            notificação no celular do jogador.
+        </p>
+
+
+        <div class="card-form">
+
+            <div class="form-group">
+
+                <label for="notif-email">
+                    E-mail do Jogador:
+                </label>
+
+                <input type="email" id="notif-email" placeholder="ex: jogador@gmail.com">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="notif-titulo">
+                    Título da Notificação:
+                </label>
+
+                <input type="text" id="notif-titulo" placeholder="ex: Novo aviso">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="notif-mensagem">
+                    Mensagem:
+                </label>
+
+                <textarea id="notif-mensagem" rows="4"
+                    placeholder="Digite a mensagem que será enviada ao jogador..."></textarea>
+
+            </div>
+
+
+            <button class="btn-notificar" onclick="enviarNotificacao()">
+                🔔 ENVIAR NOTIFICAÇÃO AO JOGADOR
+            </button>
+
+        </div>
+
+
+        <div class="footer">
+
+            Portal Gamer - Painel Administrativo
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        // =====================================================
+        // CARREGAR SOLICITAÇÕES DE SENHA
+        // =====================================================
+
+        async function carregarSolicitacoes() {
+
+            try {
+
+                const res = await fetch('/rh/solicitacoes');
+
+                const dados = await res.json();
+
+                const tabela =
+                    document.getElementById('corpo-tabela');
+
+                const msgVazia =
+                    document.getElementById('mensagem-vazia');
+
+                tabela.innerHTML = '';
+
+
+                if (!res.ok) {
+
+                    throw new Error(
+                        'Erro ao buscar solicitações.'
+                    );
+
+                }
+
+
+                if (dados.length === 0) {
+
+                    msgVazia.style.display = 'block';
+
+                    return;
+
+                }
+
+
+                msgVazia.style.display = 'none';
+
+
+                dados.forEach(item => {
+
+                    const linha =
+                        document.createElement('tr');
+
+
+                    const dataFormatada =
+                        new Date(
+                            item.data_solicitacao
+                        ).toLocaleString('pt-BR');
+
+
+                    linha.innerHTML = `
+
+                        <td>
+                            ${item.id}
+                        </td>
+
+                        <td>
+                            ${item.email}
+                        </td>
+
+                        <td>
+                            ${dataFormatada}
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="btn-reset"
+                                onclick="resetarSenha(
+                                    '${item.email}',
+                                    ${item.id}
+                                )"
+                            >
+                                 Redefinir senha
+                            </button>
+
+                        </td>
+
+                    `;
+
+
+                    tabela.appendChild(linha);
+
+                });
+
+
+            } catch (erro) {
+
+                console.error(
+                    'Erro ao carregar solicitações:',
+                    erro
+                );
+
+                alert(
+                    'Erro ao carregar os chamados de senha.'
+                );
+
+            }
+
+        }
+
+
+        // =====================================================
+        // RESETAR SENHA
+        // =====================================================
+
+        async function resetarSenha(
+            email,
+            idSolicitacao
+        ) {
+
+            const confirmou = confirm(
+
+                `Deseja redefinir a senha do jogador:
+
+${email}
+
+A senha será alterada para:
+
+gamer123`
+
+            );
+
+
+            if (!confirmou) {
+
+                return;
+
+            }
+
+
+            try {
+
+                const res = await fetch(
+                    '/rh/resetar-senha',
+                    {
+                        method: 'PUT',
+
+                        headers: {
+                            'Content-Type':
+                                'application/json'
+                        },
+
+                        body: JSON.stringify({
+                            email: email,
+                            idSolicitacao:
+                                idSolicitacao
+                        })
+                    }
+                );
+
+
+                const resultado =
+                    await res.json();
+
+
+                if (!res.ok) {
+
+                    alert(
+                        resultado.error ||
+                        'Erro ao redefinir senha.'
+                    );
+
+                    return;
+
+                }
+
+
+                alert(
+                    '✅ ' + resultado.message
+                );
+
+
+                // Atualiza a tabela
+                carregarSolicitacoes();
+
+
+            } catch (erro) {
+
+                console.error(erro);
+
+                alert(
+                    '❌ Erro de conexão com o servidor.'
+                );
+
+            }
+
+        }
+
+
+        // =====================================================
+        // ENVIAR NOTIFICAÇÃO
+        // =====================================================
+
+        async function enviarNotificacao() {
+
+            const email =
+                document.getElementById(
+                    'notif-email'
+                ).value.trim();
+
+
+            const titulo =
+                document.getElementById(
+                    'notif-titulo'
+                ).value.trim();
+
+
+            const mensagem =
+                document.getElementById(
+                    'notif-mensagem'
+                ).value.trim();
+
+
+            if (!email || !titulo || !mensagem) {
+
+                alert(
+                    '⚠️ Preencha o e-mail, título e mensagem.'
+                );
+
+                return;
+
+            }
+
+
+            try {
+
+                const res = await fetch(
+                    '/notificacoes/enviar',
+                    {
+                        method: 'POST',
+
+                        headers: {
+                            'Content-Type':
+                                'application/json'
+                        },
+
+                        body: JSON.stringify({
+                            email: email,
+                            titulo: titulo,
+                            mensagem: mensagem
+                        })
+                    }
+                );
+
+
+                const dados =
+                    await res.json();
+
+
+                if (!res.ok) {
+
+                    alert(
+                        dados.mensagem ||
+                        dados.error ||
+                        'Erro ao enviar notificação.'
+                    );
+
+                    return;
+
+                }
+
+
+                alert(
+                    '✅ Notificação enviada com sucesso para o jogador!'
+                );
+
+
+                // Limpa o formulário
+
+                document.getElementById(
+                    'notif-email'
+                ).value = '';
+
+                document.getElementById(
+                    'notif-titulo'
+                ).value = '';
+
+                document.getElementById(
+                    'notif-mensagem'
+                ).value = '';
+
+
+            } catch (erro) {
+
+                console.error(
+                    'Erro ao enviar notificação:',
+                    erro
+                );
+
+                alert(
+                    '❌ Erro de conexão com o servidor.'
+                );
+
+            }
+
+        }
+
+
+        // =====================================================
+        // INICIAR PAINEL
+        // =====================================================
+
+        carregarSolicitacoes();
+
+    </script>
+
+</body>
+
+</html>
